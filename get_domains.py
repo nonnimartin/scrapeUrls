@@ -59,9 +59,3 @@ class getDomains(object):
               self.domains.append(no_pref_link)
 
         return self.domains
-
-test  = getDomains("hey")
-listy = test.queryAsk()
-
-for i in listy:
-  print i
