@@ -13,9 +13,15 @@ class getDomains(object):
         queryUrl     = googlePrefix + self.query
         return self.getLinks(queryUrl)
 
+    def queryAsk(self):
+        askPrefix    = "http://www.ask.com/web?q="
+        askPostfix   = "&o=0&qo=homepageSearchBox"
+        queryUrl     = askPrefix + self.query + askPostfix
+        return self.getLinks(queryUrl)
+
     def remove_prefix(self, text):
 
-        prefixes = ["/search?ie=UTF-8&q=related:", "/url?q="]
+        prefixes = ["//"]
 
         #if text.startswith(prefixes):
         for prefix in prefixes:
@@ -39,34 +45,23 @@ class getDomains(object):
 
         #Links with markers of interest
         links = []
-        
-        #list of normal default Google links that will occur in any basic Google search
-        defaultGoogle = [
-                       "https://maps.google.com/maps?hl=en&tab=wl",
-                       "https://play.google.com/?hl=en&tab=w8",
-                       "https://www.youtube.com/results?tab=w1",
-                       "https://news.google.com/nwshp?hl=en&tab=wn",
-                       "https://mail.google.com/mail/?tab=wm",
-                       "https://drive.google.com/?tab=wo",
-                       "https://www.google.com/intl/en/options/",
-                       "http://www.google.com/history/optout?hl=en"
-        ]
 
         for link in soupObj.find_all('a'):
             rawLinks.append(link.get('href'))
-        
+
         #list features of interest
         markers = ["http", "https", "www"]
 
-        print rawLinks
 
         for link in rawLinks:
-            for marker in markers:
-                if marker in link and not any(substring in link for substring in defaultGoogle):
-                    no_pref_link = self.remove_prefix(link)
-                    self.domains.append(no_pref_link)
+            if link.startswith(("https", "http", "www", "//www")):
+              no_pref_link = self.remove_prefix(link)
+              self.domains.append(no_pref_link)
 
         return self.domains
 
-test = getDomains("hey")
-print test.queryGoogle()
+test  = getDomains("hey")
+listy = test.queryAsk()
+
+for i in listy:
+  print i
