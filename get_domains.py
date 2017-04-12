@@ -3,9 +3,15 @@ import requests
 
 class getDomains(object):
 
-    def __init__(self):
+    def __init__(self, query):
 
         self.domains  = []
+        self.query    = query
+
+    def queryGoogle(self):
+        googlePrefix = "https://www.google.com/#q="
+        queryUrl     = googlePrefix + self.query
+        return self.getLinks(queryUrl)
 
     def remove_prefix(self, text):
 
@@ -36,10 +42,7 @@ class getDomains(object):
         
         #list of normal default Google links that will occur in any basic Google search
         defaultGoogle = [
-
-                       "https://www.google.com/search?hl=en&tbm=isch&source=og&tab=wi",
                        "https://maps.google.com/maps?hl=en&tab=wl",
-                       "https://play.google.com/?hl=en&tab=w8",
                        "https://play.google.com/?hl=en&tab=w8",
                        "https://www.youtube.com/results?tab=w1",
                        "https://news.google.com/nwshp?hl=en&tab=wn",
@@ -55,6 +58,8 @@ class getDomains(object):
         #list features of interest
         markers = ["http", "https", "www"]
 
+        print rawLinks
+
         for link in rawLinks:
             for marker in markers:
                 if marker in link and not any(substring in link for substring in defaultGoogle):
@@ -62,3 +67,6 @@ class getDomains(object):
                     self.domains.append(no_pref_link)
 
         return self.domains
+
+test = getDomains("hey")
+print test.queryGoogle()
