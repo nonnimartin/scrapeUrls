@@ -1,22 +1,24 @@
 from bs4 import BeautifulSoup as soupy
 import requests
+import get_random_query
 
 class getDomains(object):
 
-    def __init__(self, query):
+    def __init__(self):
 
         self.domains  = []
-        self.query    = query
-
-    def queryGoogle(self):
-        googlePrefix = "https://www.google.com/#q="
-        queryUrl     = googlePrefix + self.query
-        return self.getLinks(queryUrl)
 
     def queryAsk(self):
+
         askPrefix    = "http://www.ask.com/web?q="
         askPostfix   = "&o=0&qo=homepageSearchBox"
-        queryUrl     = askPrefix + self.query + askPostfix
+
+        randQueryObj = get_random_query.getRandomQuery()
+        randQuery    = randQueryObj.randomQueryTerms()
+
+        print randQuery
+
+        queryUrl     = askPrefix + randQuery + askPostfix
         return self.getLinks(queryUrl)
 
     def remove_prefix(self, text):
@@ -52,10 +54,12 @@ class getDomains(object):
         #list features of interest
         markers = ["http", "https", "www"]
 
-
         for link in rawLinks:
             if link.startswith(("https", "http", "www", "//www")):
               no_pref_link = self.remove_prefix(link)
               self.domains.append(no_pref_link)
 
         return self.domains
+
+test = getDomains()
+print test.queryAsk()
