@@ -60,6 +60,3 @@ class getDomains(object):
               self.domains.append(no_pref_link)
 
         return self.domains
-
-test = getDomains()
-print test.queryAsk()
