@@ -40,7 +40,7 @@ class getDomains(object):
         #Make BeautifulSoup HTML object
         soupObj = soupy(data, "html.parser")
 
-        #raw image links from bs4
+        #raw links from bs4
         rawLinks=[]
 
         #Links with markers of interest
