@@ -22,8 +22,7 @@ class getDomains(object):
     def remove_prefix(self, text):
 
         prefixes = ["//"]
-
-        #if text.startswith(prefixes):
+        
         for prefix in prefixes:
             if text.startswith(prefix):
                 split_text = text.split(prefix)
