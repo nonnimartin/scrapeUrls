@@ -16,8 +16,6 @@ class getDomains(object):
         randQueryObj = get_random_query.getRandomQuery()
         randQuery    = randQueryObj.randomQueryTerms()
 
-        print randQuery
-
         queryUrl     = askPrefix + randQuery + askPostfix
         return self.getLinks(queryUrl)
 
